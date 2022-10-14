@@ -15,7 +15,7 @@ async function createChart() {
 }
 
 async function getData() {
-	const response = await fetch("signals/healthy_emg.csv");
+	const response = await fetch("temp_signals/healthy_ecg.csv");
 	const data = await response.text();
 
 	const table = data.split("\n").slice(1);
