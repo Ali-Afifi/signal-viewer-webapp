@@ -8,8 +8,14 @@
 		<title>signal viewer</title>
 	</head>
 	<body>
+		<form id="uploadForm">
+			<input type="file" id="myFiles" accept=".csv" multiple />
+			<button id="uploadButton">submit</button>
+		</form>
+		<h2 id="uploadMsg"></h2>
 		<div id="signal"></div>
-		<script src="plotly-2.14.0.min.js"></script>
-		<script src="index.js"></script>
+		<script src="js/plotly-2.14.0.min.js"></script>
+		<script src="js/fileUpload.js"></script>
+		<script src="js/plot.js"></script>
 	</body>
 </html>
