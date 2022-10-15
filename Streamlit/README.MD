@@ -1,6 +1,8 @@
-To run the wesbite:
+### To run the wesbite:
 
-1- run `.venv\scripts\activate`
+1-Open app.py with your code editor
+
+2- run `.venv\scripts\activate`
 (if you get this error `cannot be loaded because running scripts is disabled on this system` run: `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process` and redo 1st step)
 
-2- run `streamlit run app.py`
+3- run `streamlit run app.py`
