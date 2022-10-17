@@ -4,7 +4,7 @@ import pandas as pd
 import plotly.express as px
 import time
 
-files = ["./signals/healthy_emg.csv", "./signals/healthy_ecg.csv"]
+files = ["./signals/healthy_emg.csv", "./signals/healthy_ecg.csv", "./signals/emg2.csv"]
 
 
 st.set_page_config(page_title="signal viewer webapp", layout="wide")
@@ -27,9 +27,8 @@ signal_chunks = int(np.ceil(signal_length / 10))
 i = 0
 
 
-for seconds in range(signal_chunks):
 
-    temp_df = None
+for seconds in range(signal_chunks):
 
     if i < signal_length:
         temp_df = df.iloc[i:(i+signal_chunks)]
@@ -45,22 +44,22 @@ for seconds in range(signal_chunks):
             with fig_container:
                 st.markdown("### First Chart")
                 fig = px.line(data_frame=temp_df, x="Time",
-                              y="Value")
+                              y="Value", width=1000)
 
                 fig.update_xaxes()
                 st.write(fig)
 
             st.markdown("### Detailed Data View")
             st.dataframe(temp_df)
-            time.sleep(1)
+            time.sleep(0.1)
     else:
         with place_holder.container():
             fig_container = st.container()
 
             with fig_container:
                 st.markdown("### First Chart")
-                fig = px.line(data_frame=temp_df, x="Time",
-                              y="Value", range_x=[0, 5])
+                fig = px.line(data_frame=df, x="Time",
+                              y="Value", range_x=[0, 5], width=1000)
 
                 fig.update_xaxes()
                 st.write(fig)
