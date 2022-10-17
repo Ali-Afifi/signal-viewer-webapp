@@ -11,7 +11,7 @@ st.set_page_config(page_title="signal viewer webapp", layout="wide")
 
 st.title("Signal Viewer application")
 
-file_selector = st.selectbox(label="Select file", options=files)
+file_selector = st.selectbox(label="Select file", options=files, index=1)
 
 for file in files:
     if file == file_selector:
@@ -20,22 +20,51 @@ for file in files:
 
 place_holder = st.empty()
 
-signal_length = int(np.ceil((len(df)-1) / 10))
+
+signal_length = len(df) - 1
+signal_chunks = int(np.ceil(signal_length / 10))
+
+i = 0
 
 
-for seconds in range(signal_length):
+for seconds in range(signal_chunks):
 
-    # temp_df = pd.DataFrame(df)
+    temp_df = None
 
-    with place_holder.container():
-        fig_col = st.container()
+    if i < signal_length:
+        temp_df = df.iloc[i:(i+signal_chunks)]
+    else:
+        temp_df = df
 
-        with fig_col:
-            st.markdown("### First Chart")
-            fig = px.line(data_frame=df, y='Value', x='Time')
-            fig.update_xaxes()
-            st.write(fig)
+    i += signal_chunks
 
-        st.markdown("### Detailed Data View")
-        st.dataframe(df)
-        time.sleep(1)
+    if i <= signal_length:
+        with place_holder.container():
+            fig_container = st.container()
+
+            with fig_container:
+                st.markdown("### First Chart")
+                fig = px.line(data_frame=temp_df, x="Time",
+                              y="Value")
+
+                fig.update_xaxes()
+                st.write(fig)
+
+            st.markdown("### Detailed Data View")
+            st.dataframe(temp_df)
+            time.sleep(1)
+    else:
+        with place_holder.container():
+            fig_container = st.container()
+
+            with fig_container:
+                st.markdown("### First Chart")
+                fig = px.line(data_frame=temp_df, x="Time",
+                              y="Value", range_x=[0, 5])
+
+                fig.update_xaxes()
+                st.write(fig)
+
+            st.markdown("### Detailed Data View")
+            st.dataframe(temp_df)
+        break
